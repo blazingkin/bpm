@@ -1,7 +1,0 @@
-:nil?
-	return true
-end
-
-:to_string
-	return "nil"
-end

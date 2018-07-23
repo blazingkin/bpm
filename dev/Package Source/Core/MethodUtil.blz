@@ -1,3 +1,0 @@
-:nil?
-	return false
-end
