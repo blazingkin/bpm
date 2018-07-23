@@ -9,21 +9,16 @@ follows the "Map, Sync, Memo" ideology
 
 The easiest way to use bpm is 
 
-## Building
+## Running
 
-To build bpm from source, [stack](https://haskellstack.org) is required.
+Currently, `bpm` requires [node v10.6.0](https://nodejs.org).
 
-Building:
+To build and run it:
 
-```
-$ stack build
-```
-
-Running:
-
-```
-$ stack exec bpm-exe
+```shell
+$ npm run start
 ```
 
-Distribution-specific binaries and tarballs will be made available
-[on GitHub](https://github.com/J-Vaughan/bpm/releases).
+## Future goals
+
+ - Use [pkg](https://github.com/zeit/pkg) to produce binaries.
