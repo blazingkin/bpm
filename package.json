@@ -27,6 +27,7 @@
     "typescript": "^2.9.2"
   },
   "devDependencies": {
+    "eslint": "^5.2.0",
     "tslint": "^5.11.0"
   }
 }
