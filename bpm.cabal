@@ -2,11 +2,13 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: fcb9cea78009c0f51776e577bf9f6d91c24fbc7d211bf8c3a2bb1f2a3899cea4
+-- hash: dac4f3e7d036bdbfc1f9a13e5487aa91505596b36e1adc53744f756c0ad6b954
 
 name:           bpm
-version:        0.1.0.0
+version:        0.1.0
+synopsis:       blz-ospl package manager
 description:    Please see the README on GitHub at <https://github.com/J-Vaughan/bpm#readme>
+category:       utility
 homepage:       https://github.com/J-Vaughan/bpm#readme
 bug-reports:    https://github.com/J-Vaughan/bpm/issues
 author:         James Vaughan
@@ -26,7 +28,9 @@ source-repository head
 
 library
   exposed-modules:
+      BPM
       Lib
+      Remote.Package
   other-modules:
       Paths_bpm
   hs-source-dirs:
