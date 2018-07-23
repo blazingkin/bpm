@@ -1,6 +1,6 @@
 module Main where
 
-import Remote.Package
+import qualified Heartbeat
 import BPM
 import System.Environment
 
@@ -9,6 +9,8 @@ main = do
     args <- getArgs
     case args of
         []    -> do showHelp
-        [arg] -> getPackage arg
+        [arg] ->
+            when arg == "init"
+                Heartbeat.init
         _     -> error "command not implemented"
 
