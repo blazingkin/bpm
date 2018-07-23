@@ -1,6 +1,9 @@
+{-# LANGUAGE QuasiQuotes #-}
 module BPM
     ( showHelp
     ) where
+
+import Data.String.Quote
 
 version :: String
 version = (show major) ++ "." ++ (show minor) ++ "." ++ (show patch) ++ message
@@ -14,4 +17,10 @@ showHelp :: IO ()
 showHelp = putStrLn help
 
 help :: String
-help = ("BPM Version " ++ version ++ "\nManages packages for the blz open-source programming language\n\nUsage: BPM [-h] package\n\nCommands:\n  -h    Shows help information")
+help = "BPM Version " ++ version ++ [s|
+Manages packages for the blz open-source programming language
+
+Usage: BPM [-h] package
+
+Commands:
+  -h    Shows help information|]

@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: dac4f3e7d036bdbfc1f9a13e5487aa91505596b36e1adc53744f756c0ad6b954
+-- hash: f1eef2dca4ce280f8ba5d7c0a9d541a35d7e6795ad593f1c093fb2e50eee7fd4
 
 name:           bpm
 version:        0.1.0
@@ -37,6 +37,7 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , string-quote >=0.0.1
   default-language: Haskell2010
 
 executable bpm-exe
@@ -49,6 +50,7 @@ executable bpm-exe
   build-depends:
       base >=4.7 && <5
     , bpm
+    , string-quote >=0.0.1
   default-language: Haskell2010
 
 test-suite bpm-test
@@ -62,4 +64,5 @@ test-suite bpm-test
   build-depends:
       base >=4.7 && <5
     , bpm
+    , string-quote >=0.0.1
   default-language: Haskell2010
