@@ -2,9 +2,10 @@
   "name": "bpm",
   "version": "0.1.0",
   "description": "blz-ospl package manager",
-  "main": "index.js",
+  "bin": "dist/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "npm run build && node dist/main.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "eslint": "^5.2.0",
+    "pkg": "^4.3.3",
     "tslint": "^5.11.0"
   }
 }
