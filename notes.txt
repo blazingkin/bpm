@@ -1,0 +1,19 @@
+Package -> Pulse <.pls> (tar or zip)
+Package dependencies (Pulses) -> Heartbeat
+                                 Heartbeat.lock
+Package authority -> Cardiovascular
+
+Update || Resolve || Create Lockfile -> beat
+
+Pack and send Cardiogram -> pump
+
+Package Pulse -> contract
+
+Send Pulse to Cardiovascular -> release
+
+Local version tree || Finished app -> Cardiogram <.cdg>
+                                   |- pulse source <.pls>
+                                   |- pulse metadata (generated from Heartbeat
+                                                      and size, etc.)
+
+Diamond Dependency Tree -> arrhythmia
