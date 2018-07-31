@@ -74,3 +74,6 @@ typings/
 
 # Compiled code
 dist
+
+# VSCode directory
+.vscode
