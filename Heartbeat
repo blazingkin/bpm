@@ -1,0 +1,5 @@
+json,   >= 2.3
+readline,   == 0.4.2
+jquyery, <= 12.2.0 && > 13.0
+rubycopy, ~> 1.2.2
+noconstraint
