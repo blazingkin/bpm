@@ -1,4 +1,6 @@
 import * as yargs from "yargs"
+import { Dependency } from "./dependency";
+import { parseHeartbeat } from "./heartbeat";
 
 const pathOptions: yargs.Options = {
     alias: "p",
@@ -23,6 +25,20 @@ switch (argv._[0]) {
 \t https://github.com/J-Vaughan/bpm")
         break
 
+    case "beat":
+        // TODO: Standardized output
+        console.log("beating")
+        parseHeartbeat()
+        break;
+
     default:
+        console.log("beating")
+        devBeat()
         break
+}
+
+function devBeat(): void {
+    parseHeartbeat().forEach((value) => {
+        console.log(`name:\t${value.name}`)
+    })
 }
