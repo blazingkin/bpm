@@ -19,9 +19,7 @@ export class Heartbeat {
 
 export function parseHB(): Heartbeat {
     // TODO: Allow other configurable names (~/.bpmrc?)
-    // HB is spliced in following for-statement(s).
-    // tslint:disable-next-line:prefer-const
-    let HB: string[] = fs.readFileSync("Heartbeat").toString().split("\n")
+    const HB: string[] = fs.readFileSync("Heartbeat").toString().split("\n")
     // Temporarily holds name out of for-loop scope.
     let name: string | null = null
     // Temporarily holds version out of for-loop scope.
@@ -35,22 +33,20 @@ export function parseHB(): Heartbeat {
         // Captures maj, min, pat, optionally msg, in [1-4].
         const versionRegExp: RegExp = /\bversion:\s+(\d+)\.(\d+)\.(\d+)\.?(.*)?/
 
+        // Tests and assigns name field for metadata.
         if (nameRegExp.test(line)) {
             // ! ignores null-check, because null is checked for above.
             name = nameRegExp.exec(line)![1]
+        }
 
-            // Removes the line from the array, to avoid confusing parseDeps.
-            HB.splice(index, 1)
-        } else if (versionRegExp.test(line)) {
+        // Tests, constructs, and assigns version field for metadata.
+        if (versionRegExp.test(line)) {
             // Constructs and passes Version object to version.
             const m = versionRegExp.exec(line)! // See explanation above.
             version = new Version(parseInt(m[1], 10),
                                   parseInt(m[2], 10),
                                   parseInt(m[3], 10),
                                   m[4] ? m[4] : undefined)
-
-            // Removes the line from the array, to avoid confusing parseDeps.
-            HB.splice(index, 1)
         }
 
         if (name && version) {
@@ -59,7 +55,7 @@ export function parseHB(): Heartbeat {
     }
 
     // Check if name and version exist.
-    if (name === null && version === null) {
+    if (name === null || version === null) {
         console.error("name or version field not found in Heartbeat.")
     }
 
