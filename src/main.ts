@@ -1,6 +1,6 @@
 import * as yargs from "yargs"
-import { Dependency } from "./dependency";
-import { parseHeartbeat } from "./heartbeat";
+import { Dependency } from "./dependency"
+import { Heartbeat, parseHB } from "./heartbeat"
 
 const pathOptions: yargs.Options = {
     alias: "p",
@@ -28,17 +28,20 @@ switch (argv._[0]) {
     case "beat":
         // TODO: Standardized output
         console.log("beating")
-        parseHeartbeat()
+        devBeat(parseHB())
         break;
 
     default:
         console.log("beating")
-        devBeat()
+        devBeat(parseHB())
         break
 }
 
-function devBeat(): void {
-    parseHeartbeat().forEach((value) => {
-        console.log(`name:\t${value.name}`)
+// UNSAFE
+function devBeat(HB: Heartbeat): void {
+    console.log(HB.metadata.name)
+    console.log(HB.metadata.version)
+    HB.devDeps!.forEach((dep) => {
+        console.log(dep.name)
     })
 }

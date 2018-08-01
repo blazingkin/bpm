@@ -6,13 +6,16 @@ export class Dependency {
     public name: string
     public resolvedVersion?: Version
 
-    protected scope: Scope
-    protected versionConstraint: string // TODO: version constraint class
+    public scope: Scope
+    public versionConstraint: string // TODO: version constraint class
+
+    // public subDependencies?: Dependency[]
 
     public constructor(name: string,
                        scope: Scope,
                        resolvedVersion?: Version,
-                       versionConstraint?: string) {
+                       versionConstraint?: string,
+                     /*subdeps?: [Dependency]*/) {
         this.name = name
         this.scope = scope
 
@@ -25,5 +28,9 @@ export class Dependency {
         if (resolvedVersion) {
             this.resolvedVersion = resolvedVersion
         }
+
+        /* if (subdeps) {
+            this.subDependencies = subdeps
+        } */
     }
 }
