@@ -1,4 +1,5 @@
 import * as yargs from "yargs"
+import { beat } from "./beat"
 import { Dependency } from "./dependency"
 import { Heartbeat, parseHB } from "./heartbeat"
 
@@ -40,8 +41,6 @@ switch (argv._[0]) {
 // UNSAFE
 function devBeat(HB: Heartbeat): void {
     console.log(HB.metadata.name)
-    console.log(HB.metadata.version)
-    HB.devDeps!.forEach((dep) => {
-        console.log(dep.name)
-    })
+    console.log(HB.metadata.version.toString())
+    beat(HB.devDeps!)
 }

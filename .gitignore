@@ -77,3 +77,6 @@ dist
 
 # VSCode directory
 .vscode
+
+# Blaze package directory
+Packages
