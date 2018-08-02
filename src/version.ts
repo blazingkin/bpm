@@ -16,12 +16,12 @@ export class Version {
         }
     }
 
-    public asString() {
-        let mes: string | undefined
+    public toString() {
+        let mes: string | null
 
-        if (this.message) {
+        if (this.message !== undefined) {
             switch (this.message) {
-                case " ":
+                case " ": // TODO: Account for -message, _message, .message, etc
                     mes = this.message
                     break;
 
@@ -29,7 +29,9 @@ export class Version {
                     mes = `.${ this.message }`
                     break;
             }
+        } else {
+            mes = null
         }
-        return `${ this.major }.${ this.minor }.${ this.patch }${ mes }`
+        return `${ this.major }.${ this.minor }.${ this.patch }${ mes ? mes : "" }`
     }
 }
