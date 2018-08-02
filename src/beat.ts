@@ -31,16 +31,19 @@ function addDep(dep: Dependency, source = defaultSource): void {
 
     // Check if matching directory exists.
     if (fs.existsSync(dirName)) {
-        // TODO: Version specification. I'm thinking name/0.1.0/, name/0.2.1/
-        fs.symlink(path.join(source, dep.name), // Target
-                   // TODO: Change dep.name into depIdentifier with version
-                   // specification.
-                   path.join(process.cwd(), "Packages", dep.name), // Link path
-                   (err: NodeJS.ErrnoException) => {
-                       if (err) {
-                           throw err
-                        }
-                    })
+        // Check if directory is already symlinked.
+        if (!fs.existsSync(path.join(process.cwd(), "Packages", dep.name))) {
+            // TODO: Version specification. I'm thinking name/0.1.0/
+            fs.symlink(path.join(source, dep.name), // Target
+                    // TODO: Change dep.name into depIdentifier with version
+                    // specification.
+                    path.join(process.cwd(), "Packages", dep.name),
+                    (err: NodeJS.ErrnoException) => {
+                        if (err) {
+                            throw err
+                            }
+                        })
+        }
     } /* else if (isInIndex(dep)) {
         getDep(dep) } */
     // Remove ↓ if above is implemented.
