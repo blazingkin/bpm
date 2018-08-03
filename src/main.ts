@@ -21,7 +21,8 @@ const argv: yargs.Arguments = yargs
 
 switch (argv._[0]) {
     case "init":
-        // TODO: CLI helper (like yeoman or npm init)
+        // TODO: CLI helper (like yeoman or npm init) (Must include autolink to
+        // Core package, since it's required by all Blaze programs.)
         console.log("not implemented. feel free to help at\n\
 \t https://github.com/J-Vaughan/bpm")
         break
