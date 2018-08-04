@@ -2,7 +2,7 @@
   "name": "bpm",
   "version": "0.1.0",
   "description": "blz-ospl package manager",
-  "bin": "dist/main.js",
+  "bin": "./bin/bpm",
   "scripts": {
     "build": "tsc",
     "start": "npm run build && node dist/main.js"
