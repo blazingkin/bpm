@@ -1,6 +1,6 @@
 import { Version } from "./version"
 
-export enum Scope { Prod, Development }
+export enum Scope { Production, Development, Global }
 
 export class Dependency {
     public name: string

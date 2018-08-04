@@ -1,4 +1,24 @@
 export class Version {
+
+    public static fromString(input: string): Version {
+        const semVerRegexp: RegExp = /\s*(\d+)\.(\d+)\.(\d+)\.?(.*)?/
+        let version: Version
+
+        if (semVerRegexp.test(input)) {
+            // ! ignores null-check, because null is checked for above.
+            const m = semVerRegexp.exec(input)!
+            version = new Version(parseInt(m[1], 10),
+                                  parseInt(m[2], 10),
+                                  parseInt(m[3], 10),
+                                  m[4] ? m[4] : undefined)
+        } else {
+            console.error("Incompatible version syntax")
+            process.exit(1)
+        }
+
+        // ! ignores null-check, because null is checked for above.
+        return version!
+    }
     public major: number
     public minor: number
     public patch: number

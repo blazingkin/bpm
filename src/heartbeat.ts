@@ -1,3 +1,4 @@
+import * as bombadil from "@sgarciac/bombadil"
 import * as fs from "fs"
 import { Dependency, Scope } from "./dependency"
 import { Metadata } from "./metadata"
@@ -5,82 +6,117 @@ import { Version } from "./version"
 
 export class Heartbeat {
     public metadata: Metadata
+    public deps: Dependency[]
     public devDeps?: Dependency[]
     public prodDeps?: Dependency[]
 
-    public constructor(m: Metadata, d?: Dependency[], p?: Dependency[]) {
+    public constructor(m: Metadata,
+                       d: Dependency[],
+                       v?: Dependency[],
+                       p?: Dependency[]) {
         // Maybe pass in name and version strings instead of relying on calling
         // function to create a new Metadata object.
         this.metadata = m
-        this.devDeps = d
+        this.deps = d
+        this.devDeps = v
         this.prodDeps = p
     }
 }
 
 export function parseHB(): Heartbeat {
-    // Holds contents of Heartbeat
+    // Reads and stores contents of Heartbeat.toml.
     // TODO: Allow other configurable names (~/.bpmrc?)
-    let HB: string[]
-    // Temporarily holds name out of for-loop scope.
-    let name: string | null = null
-    // Temporarily holds version out of for-loop scope.
-    let version: Version | null = null
+    const reader: bombadil.TomlReader = new bombadil.TomlReader()
+    // Holds Metadata.
+    let metadata: Metadata
+
+    // Temporary dependency arrays.
+    // tslint:disable-next-line:prefer-const
+    let deps: Dependency[]
+    // tslint:disable-next-line:prefer-const
+    let devDeps: Dependency[]
+    // tslint:disable-next-line:prefer-const
+    let prodDeps: Dependency[]
 
     // Checks if Heartbeat exists.
-    if (fs.existsSync("Heartbeat")) {
-        HB = fs.readFileSync("Heartbeat").toString().split("\n")
+    if (fs.existsSync("Heartbeat.toml")) {
+        // Read and parse TOML.
+        reader.readToml(fs.readFileSync("Heartbeat.toml").toString())
     } else {
-        console.error("Heartbeat not found")
+        console.error("Heartbeat.toml not found")
         process.exit(1)
         // Typescript throws a fit if this line isn't here, even though it's
         // unreachable.
         throw new Error("Appease me, Seymour.")
     }
 
-    // Removes and assigns metadata.
-    for (let index = 0; index < HB.length; index++) {
-        const line = HB[index];
-        // Captures name in [1].
-        const nameRegExp: RegExp = /\bname:\s+(.*)\s*/
-        // Captures maj, min, pat, optionally msg, in [1-4].
-        const versionRegExp: RegExp = /\bversion:\s+(\d+)\.(\d+)\.(\d+)\.?(.*)?/
-
-        // Tests and assigns name field for metadata.
-        if (nameRegExp.test(line)) {
-            // ! ignores null-check, because null is checked for above.
-            name = nameRegExp.exec(line)![1]
-        }
-
-        // Tests, constructs, and assigns version field for metadata.
-        if (versionRegExp.test(line)) {
-            // Constructs and passes Version object to version.
-            const m = versionRegExp.exec(line)! // See explanation above.
-            version = new Version(parseInt(m[1], 10),
-                                  parseInt(m[2], 10),
-                                  parseInt(m[3], 10),
-                                  m[4] ? m[4] : undefined)
-        }
-
-        if (name && version) {
-            break
-        }
+    // Checks for invalid TOML.
+    if (reader.result === null) {
+        throw reader.errors
     }
 
-    // Check if name and version exist.
-    if (name === null || version === null) {
-        console.error("name or version field not found in Heartbeat.")
+    // Assigns reader.result to shorter name
+    const HB = reader.result
+
+    // Checks for required fields (name, version).
+    if (HB.name === null) {
+        console.error("name required in Heartbeat.toml")
+        process.exit(1)
+    } else if (HB.version === null) {
+        console.error("version required in Heartbeat.toml")
+        process.exit(1)
+    } else {
+        metadata = new Metadata(HB.name, Version.fromString(HB.version))
     }
 
-    // Pass the remaining strings to parseDeps.
-    // TODO: Parse and pass the scopes to parseDeps.
-    const parsedDependencies: Dependency[] = parseDeps(HB)
+    // Dependency existence check (required).
+    if (HB.deps === null) {
+        console.error("dependency field ([deps]) not found")
+        process.exit(1)
+    }
 
-    // Construct Metadata object from name and version. ! overrides null-check,
-    // since existence is tested above.
-    const metadata: Metadata = new Metadata(name!, version!)
+    // Core package existence check (required).
+    if (HB.deps.Core === null) {
+        console.error("Core package required")
+        process.exit(1)
+    }
 
-    // Construct and return Heartbeat object.
-    return new Heartbeat(metadata, parsedDependencies)
+    // Global package processing.
+    Object.keys(HB.deps).forEach((key) => {
+        if (key !== "dev" && key !== "prod") {
+            deps.push(new Dependency(key,
+                                     Scope.Global,
+                                     undefined,
+                                     HB.deps[key]))
+        }
+    })
+
+    // Development package existence check.
+    if (HB.deps.dev !== null) {
+        // Development package processing.
+        Object.keys(HB.deps.dev).forEach((key) => {
+            devDeps.push(new Dependency(key,
+                                        Scope.Development,
+                                        undefined,
+                                        HB.deps.dev[key]))
+        })
+    }
+
+    // Production package existence check.
+    if (HB.deps.prod !== null) {
+        // Production package processing.
+        Object.keys(HB.deps.prod).forEach((key) => {
+            prodDeps.push(new Dependency(key,
+                                         Scope.Production,
+                                         undefined,
+                                         HB.deps.prod[key]))
+        })
+    }
+
+    // Constructs and returns Heartbeat object.
+    // ! ignores initialized-check, because this method will not return if any
+    // of the following arguments are not accounted for.
+    return new Heartbeat(metadata!, deps!, devDeps!, prodDeps!)
 }
 
 // TODO: Comments (in Heartbeat), etc.
