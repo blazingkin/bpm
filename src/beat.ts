@@ -2,8 +2,6 @@ import * as fs from "fs"
 import * as os from "os"
 import * as path from "path"
 import { Dependency } from "./dependency"
-import * as hb from "./heartbeat"
-import { Version } from "./version"
 
 const defaultSource: string = process.env.BLZPACKAGES || path.join(os.homedir(),
                                                              ".bpm", "packages")
