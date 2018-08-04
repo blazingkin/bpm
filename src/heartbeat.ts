@@ -32,11 +32,11 @@ export function parseHB(): Heartbeat {
 
     // Temporary dependency arrays.
     // tslint:disable-next-line:prefer-const
-    let deps: Dependency[]
+    let deps: Dependency[] = new Array()
     // tslint:disable-next-line:prefer-const
-    let devDeps: Dependency[]
+    let devDeps: Dependency[] = new Array()
     // tslint:disable-next-line:prefer-const
-    let prodDeps: Dependency[]
+    let prodDeps: Dependency[] = new Array()
 
     // Checks if Heartbeat exists.
     if (fs.existsSync("Heartbeat.toml")) {
@@ -82,34 +82,34 @@ export function parseHB(): Heartbeat {
     }
 
     // Global package processing.
-    Object.keys(HB.deps).forEach((key) => {
+    Object.entries(HB.deps).forEach(([key, value]) => {
         if (key !== "dev" && key !== "prod") {
             deps.push(new Dependency(key,
                                      Scope.Global,
                                      undefined,
-                                     HB.deps[key]))
+                                     value))
         }
     })
 
     // Development package existence check.
     if (HB.deps.dev !== null) {
         // Development package processing.
-        Object.keys(HB.deps.dev).forEach((key) => {
+        Object.entries(HB.deps.dev).forEach(([key, value]) => {
             devDeps.push(new Dependency(key,
                                         Scope.Development,
                                         undefined,
-                                        HB.deps.dev[key]))
+                                        value))
         })
     }
 
     // Production package existence check.
     if (HB.deps.prod !== null) {
         // Production package processing.
-        Object.keys(HB.deps.prod).forEach((key) => {
+        Object.entries(HB.deps.prod).forEach(([key, value]) => {
             prodDeps.push(new Dependency(key,
                                          Scope.Production,
                                          undefined,
-                                         HB.deps.prod[key]))
+                                         value))
         })
     }
 
