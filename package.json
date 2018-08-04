@@ -1,9 +1,11 @@
 {
   "name": "bpm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "blz-ospl package manager",
   "bin": "./bin/bpm",
   "scripts": {
+    "prepare": "npm run build",
+    "prepublishOnly": "rm ./dist/* && npm run build",
     "build": "tsc",
     "start": "npm run build && node dist/main.js"
   },
@@ -27,7 +29,6 @@
   "dependencies": {
     "js-yaml": "^3.12.0",
     "toml": "^2.3.3",
-    "typescript": "^2.9.2",
     "yargs": "^12.0.1"
   },
   "devDependencies": {
@@ -36,6 +37,7 @@
     "@types/yargs": "^11.1.1",
     "eslint": "^5.2.0",
     "pkg": "^4.3.3",
-    "tslint": "^5.11.0"
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2"
   }
 }

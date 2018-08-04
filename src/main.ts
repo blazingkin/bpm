@@ -11,11 +11,14 @@ const pathOptions: yargs.Options = {
 
 // In the future, use the method here:
 //   https://github.com/yargs/yargs/blob/master/docs/api.md#envprefix
-// to allow users to store cardiovascular credentials in env variables
+// to allow users to store cardiovascular credentials in env variables.
+
+// In the near future, use this:
+//   https://github.com/yargs/yargs/blob/master/docs/advanced.md#commanddirdirectory-opts
 const argv: yargs.Arguments = yargs
     .scriptName("bpm")
     .command("init [path]", "initialize a blank pulse", {path: pathOptions})
-    .command(["beat", "$0"], "synchronize dependencies")
+    .command(["beat"], "synchronize dependencies")
     .help("h")
     .argv
 
@@ -34,8 +37,7 @@ switch (argv._[0]) {
         break;
 
     default:
-        console.log("beating")
-        devBeat(parseHB())
+        yargs.showHelp()
         break
 }
 
