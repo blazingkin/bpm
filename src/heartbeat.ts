@@ -18,12 +18,24 @@ export class Heartbeat {
 }
 
 export function parseHB(): Heartbeat {
+    // Holds contents of Heartbeat
     // TODO: Allow other configurable names (~/.bpmrc?)
-    const HB: string[] = fs.readFileSync("Heartbeat").toString().split("\n")
+    let HB: string[]
     // Temporarily holds name out of for-loop scope.
     let name: string | null = null
     // Temporarily holds version out of for-loop scope.
     let version: Version | null = null
+
+    // Checks if Heartbeat exists.
+    if (fs.existsSync("Heartbeat")) {
+        HB = fs.readFileSync("Heartbeat").toString().split("\n")
+    } else {
+        console.error("Heartbeat not found")
+        process.exit(1)
+        // Typescript throws a fit if this line isn't here, even though it's
+        // unreachable.
+        throw new Error("Appease me, Seymour.")
+    }
 
     // Removes and assigns metadata.
     for (let index = 0; index < HB.length; index++) {
