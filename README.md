@@ -1,5 +1,11 @@
 # bpm
 
+> Disclaimer: BPM is currently in a pre-release state. Nothing on the
+> development branch is guaranteed to work, even from commit-to-commit.
+>
+> Additionally, the API on `master` is subject to change, and should not be
+> relied on too heavily.
+
 bpm is a package manager for the blz open-source programming language. It
 features <!-- Nothing --> code-generation and project development tools, and
 follows the "Map, Sync, Memo" ideology
