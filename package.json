@@ -1,6 +1,6 @@
 {
   "name": "@blz-ospl/bpm",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "blz-ospl package manager",
   "bin": "./bin/bpm",
   "scripts": {
