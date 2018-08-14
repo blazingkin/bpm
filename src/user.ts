@@ -101,6 +101,8 @@ export function logIn(): boolean {
                                     enquirer.prompt(newAccPrompt)
                                         .then((answer: any) => {
                                             if (answer.newAcc === true) {
+                                                // Behold the true power of TS:
+                                                // 52 characters of whitespace.
                                                 newUser(answers.email,
                                                     answers.password)
                                             }
