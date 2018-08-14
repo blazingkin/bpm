@@ -29,6 +29,7 @@
     "@sgarciac/bombadil": "^2.0.0-0",
     "base-64": "^0.1.0",
     "enquirer": "^1.0.3",
+    "prompt-confirm": "^2.0.4",
     "prompt-password": "^1.2.0",
     "request": "^2.88.0",
     "tar": "^4.4.6",
