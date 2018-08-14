@@ -59,10 +59,10 @@ export function parseHB(): Heartbeat {
     const HB = reader.result
 
     // Checks for required fields (name, version).
-    if (HB.name === null) {
+    if (!HB.name) {
         console.error("name required in Heartbeat.toml")
         process.exit(1)
-    } else if (HB.version === null) {
+    } else if (!HB.version) {
         console.error("version required in Heartbeat.toml")
         process.exit(1)
     } else {
@@ -70,13 +70,13 @@ export function parseHB(): Heartbeat {
     }
 
     // Dependency existence check (required).
-    if (HB.deps === null) {
+    if (!HB.deps) {
         console.error("dependency field ([deps]) not found")
         process.exit(1)
     }
 
     // Core package existence check (required).
-    if (HB.deps.Core === null) {
+    if (!HB.deps.Core) {
         console.error("Core package required")
         process.exit(1)
     }
@@ -92,7 +92,7 @@ export function parseHB(): Heartbeat {
     })
 
     // Development package existence check.
-    if (HB.deps.dev !== null) {
+    if (HB.deps.dev) {
         // Development package processing.
         Object.entries(HB.deps.dev).forEach(([key, value]) => {
             devDeps.push(new Dependency(key,
@@ -103,7 +103,7 @@ export function parseHB(): Heartbeat {
     }
 
     // Production package existence check.
-    if (HB.deps.prod !== null) {
+    if (HB.deps.prod) {
         // Production package processing.
         Object.entries(HB.deps.prod).forEach(([key, value]) => {
             prodDeps.push(new Dependency(key,
