@@ -4,7 +4,7 @@
   "description": "blz-ospl package manager",
   "bin": "./bin/bpm",
   "scripts": {
-    "prepare": "rm ./dist/* && npm run build",
+    "prepare": "rm -rf ./dist/* && npm run build",
     "build": "tsc",
     "start": "npm run build && node dist/main.js"
   },
