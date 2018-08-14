@@ -1,0 +1,49 @@
+{
+  "name": "@blz-ospl/bpm",
+  "version": "0.2.0",
+  "description": "blz-ospl package manager",
+  "bin": "./bin/bpm",
+  "scripts": {
+    "prepare": "rm ./dist/* && npm run build",
+    "build": "tsc",
+    "start": "npm run build && node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J-Vaughan/bpm.git"
+  },
+  "keywords": [
+    "utility",
+    "package",
+    "manager",
+    "blz-ospl",
+    "blaze"
+  ],
+  "author": "James Vaughan <dev.jamesvaughan@gmail.com>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/J-Vaughan/bpm/issues"
+  },
+  "homepage": "https://github.com/J-Vaughan/bpm#readme",
+  "dependencies": {
+    "@sgarciac/bombadil": "^2.0.0-0",
+    "base-64": "^0.1.0",
+    "enquirer": "^1.0.3",
+    "prompt-confirm": "^2.0.4",
+    "prompt-password": "^1.2.0",
+    "request": "^2.88.0",
+    "tar": "^4.4.6",
+    "yargs": "^12.0.1"
+  },
+  "devDependencies": {
+    "@types/base-64": "^0.1.2",
+    "@types/node": "^10.5.3",
+    "@types/request": "^2.47.1",
+    "@types/tar": "^4.0.0",
+    "@types/yargs": "^11.1.1",
+    "eslint": "^5.2.0",
+    "pkg": "^4.3.3",
+    "tslint": "^5.11.0",
+    "typescript": "^2.6.2"
+  }
+}

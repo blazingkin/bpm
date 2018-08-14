@@ -1,0 +1,16 @@
+bpm
+    -v, --version -> Prints version
+    -h, --help    -> Prints help
+
+    init
+        [path]    -> Initializes Pulse at [path], default: "."
+
+    beat
+        -V        -> Verbose debugging
+
+    contract
+        [path]    -> Pack Pulse at [path] into name-x.x.x.pls, default: "."
+
+    release
+        [path]    -> Send Pulse to Cardiovascular
+

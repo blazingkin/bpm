@@ -1,0 +1,19 @@
+# Ignore non-compiled TypeScript source directory
+src/
+
+# Ignore Packages directory
+Packages/
+
+# Ignore VSCode directory
+.vscode/
+
+# Ignore TS config files
+tsconfig.json
+tslint.json
+
+# Ignore Heartbeat file
+Heartbeat
+
+# Ignore outline .txts
+clischeme.txt
+notes.txt
