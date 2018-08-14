@@ -14,6 +14,8 @@ enquirer.register("confirm", require("prompt-confirm"))
 const jwtPath = join(homedir(), ".bpmjwt")
 const cardiovascularUrl = "http://localhost:2387"
 
+export const token: string = readFileSync(jwtPath).toString()
+
 export function isLoggedIn(): boolean {
     if (existsSync(jwtPath)) {
         // Splits JWT token into its parts:
@@ -21,10 +23,10 @@ export function isLoggedIn(): boolean {
         //      1: payload
         //      2: signature
         // and takes the payload.
-        const token: string = readFileSync(jwtPath).toString().split(".")[1]
+        const payloadB64: string = token.split(".")[1]
 
         // Decodes payload and parses it into JSON
-        const payload = JSON.parse(base64.decode(token))
+        const payload = JSON.parse(base64.decode(payloadB64))
 
         // now is defined to be compatible with server side implementation.
         // server: Math.floor(Date.now() / 1000) + (60 * 60) // as of v1.0.0
@@ -77,7 +79,7 @@ export function logIn(): boolean {
                                 // Save validation token into jwtPath,
                                 // overwriting any previous contents, because
                                 // what good is an expired token?
-                                writeFileSync(jwtPath, body, { mode: "w+" })
+                                writeFileSync(jwtPath, body, { flag: "w+" })
                                 return true
 
                             case 422:
@@ -144,7 +146,7 @@ export function newUser(email?: string, password?: string): boolean {
     // Request to create a new user with the credential specified by the user.
     request.post(cardiovascularUrl + "/users", {
         json: { email, password },
-    }, (err, res, body) => {
+    }, (err, res) => {
         if (err) {
             // Throw any request() errors.
             throw err
